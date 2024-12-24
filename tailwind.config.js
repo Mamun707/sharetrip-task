@@ -7,7 +7,9 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: { fontFamily: {
+        murecho: ['var(--font-murecho)']
+      },},
   },
   plugins: [],
 };
