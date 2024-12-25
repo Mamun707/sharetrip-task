@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 function ProductsCard() {
     const [count, setCount] = useState(0);
     const [showCartOptions, setShowCartOptions] = useState(false);
+    const [addtoWishList, setAddtoWishList] = useState(false);
     const addToCart = () => {
         setShowCartOptions(true);
         setCount((prevCount) => prevCount + 1);
@@ -10,6 +11,7 @@ function ProductsCard() {
         setShowCartOptions(false);
         setCount(0);
     };
+    const wishList = () => setAddtoWishList(!addtoWishList);
 
     return (
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5'>
@@ -23,11 +25,12 @@ function ProductsCard() {
                         />
                     </a>
                     <div className='absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto'>
-                        <button
-                            className='btn-top-right px-3 py-1  text-white rounded'
-                            onClick={() => console.log('Top Right')}
-                        >
-                            <img src='/images/products/WishlistIcon.svg' alt='img' />
+                        <button className='btn-top-right px-3 py-1 ' onClick={wishList}>
+                            {addtoWishList ? (
+                                <img src='/images/products/addedWishListIcon.svg' alt='img' />
+                            ) : (
+                                <img src='/images/products/WishlistIcon.svg' alt='img' />
+                            )}
                         </button>
                     </div>
                     <div className='absolute mx-3 inset-0 flex flex-col items-center justify-end pb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
