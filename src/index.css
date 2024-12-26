@@ -46,7 +46,9 @@ body {
         transform: rotate(360deg);
     }
 }
-
+.bg-clip-triangle{
+    clip-path: polygon(100% 0, 0 0, 100% 65%);
+}
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
