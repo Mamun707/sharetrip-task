@@ -3,11 +3,24 @@ import priceAfterDiscount from '@/utils/priceAfterDiscount.js';
 import DiscountBadge from '@/components/DiscountBadge.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '@/reduxStore/slices/cartSlice.js';
-import DiscountCard from "@/components/products/DiscountCard.jsx";
-import discountedPrice from "@/utils/dicountedPrice.js";
+import DiscountCard from '@/components/products/DiscountCard.jsx';
+import discountedPrice from '@/utils/dicountedPrice.js';
 function ProductsCard({ allProducts }) {
     const [addWishList, setAddWishList] = useState(false);
-    const wishList = () => setAddWishList(!addWishList);
+    const wishList = (item) => {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const isAlreadyInWishlist = wishlist.find((wishlistItem) => wishlistItem.id === item.id);
+
+        if (isAlreadyInWishlist) {
+            const updatedWishlist = wishlist.filter((wishlistItem) => wishlistItem.id !== item.id);
+            localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+            setAddWishList(false);
+        } else {
+            wishlist.push(item);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            setAddWishList(true);
+        }
+    };
     const products = allProducts;
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
@@ -27,25 +40,36 @@ function ProductsCard({ allProducts }) {
 
     return (
         <div className='products-card container mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4'>
                 {products?.map((item) => (
                     <div
                         key={item.id}
                         className='group w-full max-w-sm bg-white border border-transparent rounded-lg shadow-sm hover:border-gray-200 hover:shadow-lg dark:bg-gray-800 dark:border-transparent dark:hover:border-gray-700'
                     >
-
-
                         <div className='relative p-1'>
                             <img
                                 className='rounded-lg w-full group-hover:bg-black group-hover:bg-opacity-[33%] transition duration-300'
                                 src={item.thumbnail}
                                 alt='img'
                             />
-                            <div className='absolute top-3 -left-1'> <DiscountCard discountedPrice={discountedPrice(item.price, item.discountPercentage)}/></div>
+                            <div className='absolute top-3 -left-1'>
+                                {' '}
+                                <DiscountCard
+                                    discountedPrice={discountedPrice(
+                                        item.price,
+                                        item.discountPercentage
+                                    )}
+                                />
+                            </div>
 
                             <div className='absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto'>
-                                <button className='btn-top-right px-2 py-1' onClick={wishList}>
-                                    {addWishList ? (
+                                <button
+                                    className='btn-top-right px-2 py-1'
+                                    onClick={() => wishList(item)}
+                                >
+                                    {JSON.parse(localStorage.getItem('wishlist'))?.find(
+                                        (wishlistItem) => wishlistItem.id === item.id
+                                    ) ? (
                                         <img
                                             src='/images/products/addedWishListIcon.svg'
                                             alt='img'
