@@ -1,26 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import priceAfterDiscount from '@/utils/priceAfterDiscount.js';
 import DiscountBadge from '@/components/DiscountBadge.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, decrementQuantity, removeFromCart } from '@/reduxStore/slices/cartSlice.js';
+import { addToCart, removeFromCart } from '@/reduxStore/slices/cartSlice.js';
+import DiscountCard from "@/components/products/DiscountCard.jsx";
+import discountedPrice from "@/utils/dicountedPrice.js";
 function ProductsCard({ allProducts }) {
-    // const [count, setCount] = useState(0);
-    // const [showCartOptions, setShowCartOptions] = useState(false);
     const [addWishList, setAddWishList] = useState(false);
-    // const addToCart = () => {
-    //     setShowCartOptions(true);
-    //     setCount((prevCount) => prevCount + 1);
-    // };
-    // const deleteCart = () => {
-    //     setShowCartOptions(false);
-    //     setCount(0);
-    // };
     const wishList = () => setAddWishList(!addWishList);
     const products = allProducts;
-
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
-
     const isInCart = (id) => cartItems.some((item) => item.id === id);
 
     const handleAddToCart = (item) => {
@@ -35,9 +25,6 @@ function ProductsCard({ allProducts }) {
         dispatch(removeFromCart(product));
     };
 
-    const handleDecreaseQuantity = (product) => {
-        dispatch(decrementQuantity(product));
-    };
     return (
         <div className='products-card container mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
@@ -46,7 +33,7 @@ function ProductsCard({ allProducts }) {
                         key={item.id}
                         className='group w-full max-w-sm bg-white border border-transparent rounded-lg shadow-sm hover:border-gray-200 hover:shadow-lg dark:bg-gray-800 dark:border-transparent dark:hover:border-gray-700'
                     >
-                        <DiscountBadge />
+
 
                         <div className='relative p-1'>
                             <img
@@ -54,6 +41,8 @@ function ProductsCard({ allProducts }) {
                                 src={item.thumbnail}
                                 alt='img'
                             />
+                            <div className='absolute top-3 -left-1'> <DiscountCard discountedPrice={discountedPrice(item.price, item.discountPercentage)}/></div>
+
                             <div className='absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto'>
                                 <button className='btn-top-right px-2 py-1' onClick={wishList}>
                                     {addWishList ? (

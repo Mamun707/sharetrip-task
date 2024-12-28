@@ -9,33 +9,27 @@ const Navbar=()=>{
 
     return(
         <>
-    <nav className="bg-white shadow-md py-4">
-        <div className="max-w-screen-xl mx-auto flex justify-between items-center px-4">
-            {/* Logo */}
+    <nav className="bg-white shadow-md container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className=" flex justify-between items-center px-4 py-2">
             <Link to="/" className="text-xl font-semibold text-gray-800">
-                MyStore
+              Store
             </Link>
 
-            {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
-                {/*<Link to="/" className="text-lg text-gray-700 hover:text-green-500">Home</Link>*/}
-                {/*<Link to="/products" className="text-lg text-gray-700 hover:text-green-500">Products</Link>*/}
                 <Link to="/cart" >
                    <CartIcon/>
                 </Link>
             </div>
 
-            {/* Mobile Menu Button (Hamburger) */}
+            {/* Mobile Menu Button */}
             <button onClick={toggleMenu} className="md:hidden text-gray-700 focus:outline-none">
                 {isMenuOpen ? 'X' : '☰'}
             </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile  */}
         <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden bg-white py-4`}>
             <div className="flex flex-col items-center space-y-4">
-                <Link to="/" className="text-lg text-gray-700 hover:text-green-500">Home</Link>
-                <Link to="/products" className="text-lg text-gray-700 hover:text-green-500">Products</Link>
                 <Link to="/cart" >
                     <CartIcon/>
                 </Link>
