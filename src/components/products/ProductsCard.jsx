@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import priceAfterDiscount from '@/utils/priceAfterDiscount.js';
-import DiscountBadge from '@/components/DiscountBadge.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '@/reduxStore/slices/cartSlice.js';
 import DiscountCard from '@/components/products/DiscountCard.jsx';
@@ -53,13 +52,15 @@ function ProductsCard({ allProducts }) {
                                 alt='img'
                             />
                             <div className='absolute top-3 -left-1'>
-                                {' '}
-                                <DiscountCard
-                                    discountedPrice={discountedPrice(
-                                        item.price,
-                                        item.discountPercentage
-                                    )}
-                                />
+                                {(item.discountPercentage > 0 ||
+                                    item.discountPercentage != null) && (
+                                    <DiscountCard
+                                        discountedPrice={discountedPrice(
+                                            item.price,
+                                            item.discountPercentage
+                                        )}
+                                    />
+                                )}
                             </div>
 
                             <div className='absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto'>

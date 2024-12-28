@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    items: [], // Array to store cart items
-    total: 0, // Total cart price
+    items: [],
+    total: 0,
 };
 
 const cartSlice = createSlice({
@@ -14,17 +14,15 @@ const cartSlice = createSlice({
             const existingItem = state.items.find((item) => item.id === product.id);
             const productPrice = Number(product.priceAfterDiscount);
             if (existingItem) {
-                existingItem.quantity += 1; // Increment quantity if product exists
+                existingItem.quantity += 1;
                 existingItem.totalPrice += Number(productPrice);
             } else {
                 state.items.push({
                     ...product,
                     quantity: 1,
-                    totalPrice: productPrice, // Initialize total price for this item
+                    totalPrice: productPrice,
                 });
             }
-
-            // Recalculate total cart price
             state.total = state.items.reduce((acc, item) => acc + item.totalPrice, 0);
         },
         removeFromCart(state, action) {
@@ -33,7 +31,6 @@ const cartSlice = createSlice({
 
             if (existingItem) {
                 state.items = state.items.filter((item) => item.id !== productId);
-                // Recalculate total cart price
                 state.total = state.items.reduce((acc, item) => acc + item.totalPrice, 0);
             }
         },
@@ -43,12 +40,10 @@ const cartSlice = createSlice({
 
             if (existingItem && existingItem.quantity > 1) {
                 existingItem.quantity -= 1;
-                existingItem.totalPrice -= existingItem.priceAfterDiscount; // Update total price for the item
-                // Recalculate total cart price
+                existingItem.totalPrice -= existingItem.priceAfterDiscount;
                 state.total = state.items.reduce((acc, item) => acc + item.totalPrice, 0);
             } else if (existingItem && existingItem.quantity === 1) {
                 state.items = state.items.filter((item) => item.id !== productId);
-                // Recalculate total cart price
                 state.total = state.items.reduce((acc, item) => acc + item.totalPrice, 0);
             }
         },
