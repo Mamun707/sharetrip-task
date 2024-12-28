@@ -12,9 +12,9 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.container {
-    @apply  !px-[161.5px] !py-20;
-}
+/*.container {*/
+/*    @apply  !px-[161.5px] !py-20;*/
+/*}*/
 
 .spinner-container {
     position: fixed;
@@ -48,6 +48,99 @@ body {
 }
 .bg-clip-triangle{
     clip-path: polygon(100% 0, 0 0, 100% 65%);
+}
+.bg-clip-triangle-2{
+    --r: 20px; /* border radius */
+    aspect-ratio: 1/cos(30deg);
+    --_g:calc(tan(60deg)*var(--r)) bottom var(--r),#000 98%,#0000 101%;
+    mask:
+        /* a conic gradient to fill the middle area */
+            conic-gradient(from -30deg at 50% calc(200% - 3*var(--r)/2),#000 60deg,#0000 0)
+            0 100%/100% calc(100% - 3*var(--r)/2) no-repeat,
+                /* 3 radial gradients for 3 circles */
+            radial-gradient(var(--r) at 50% calc(2*var(--r)),#000 98%,#0000 101%),
+            radial-gradient(var(--r) at left  var(--_g)),
+            radial-gradient(var(--r) at right var(--_g));
+
+    clip-path: polygon(50% 0,100% 100%,0 100%);
+    /*clip-path: polygon(0% 0%, 100% 100%,0% 100%, 0% 100%);*/
+}
+/* HTML: <div class="triangle"></div> */
+.bg-clip-triangle-l-2 {
+    --r:10px; /* border radius */
+    width: 16px;
+    height: 36px;
+    aspect-ratio: auto;
+    border-bottom-left-radius: var(--r);
+    clip-path: polygon(0 0,100% 100%,0 100%);
+    --_g:calc(50%*(1 + 1/tan(22.5deg)) - var(--r)/(3*sqrt(2) - 4));
+    --_r:calc(var(--r)/tan(22.5deg)),#000 98%,#0000 101%;
+    mask:
+            radial-gradient(var(--r) at bottom var(--r) right var(--_r)),
+            radial-gradient(var(--r) at left   var(--r) top   var(--_r)),
+            conic-gradient(from 202.5deg at var(--_g) calc(100% - var(--_g)),#000 45deg,#0000 0);
+    background: linear-gradient(45deg,#FA6900,#C02942);
+}
+.bg-clip-triangle-l-old {
+    --r:15px; /* border radius */
+    --rg:0px; /* border radius */
+    width: 150px;
+    aspect-ratio: 1;
+    border-bottom-right-radius: var(--r);
+    clip-path: polygon(0 0,100% 100%,0 100%);
+    --_g:calc(50%*(1 + 1/tan(22.5deg)) - var(--r)/(3*sqrt(2) - 4));
+    --_r:calc(var(--r)/tan(22.5deg)),#000 98%,#0000 101%;
+    --_rg:calc(var(--rg)/tan(30deg)),#000 100%,#0000 1001%;
+    mask:
+            radial-gradient(var(--r) at bottom var(--r) right var(--_r)),
+            radial-gradient(var(--r) at left   var(--rg) top   var(--_rg)),
+            conic-gradient(from 202.5deg at var(--_g) calc(100% - var(--_g)),#000 45deg,#0000 0);
+    background: linear-gradient(45deg,#FA6900,#C02942);
+}
+.bg-clip-triangle-l-09 {
+    --r: 10%; /* Border radius as a percentage of height */
+    --rg: 5%; /* Secondary radius for finer control */
+    width: var(160px); /* Default width is 150px, but can be overridden */
+    height: var(360px); /* Default height is 150px, but can be overridden */
+    border-bottom-right-radius: var(--r);
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+    --_g: calc(50% * (1 + 1 / tan(22.5deg)) - (var(--r) * 1px) / (3 * sqrt(2) - 4));
+    --_r: calc((var(--r) * 1px) / tan(22.5deg));
+    --_rg: calc((var(--rg) * 1px) / tan(30deg));
+    mask:
+            radial-gradient(var(--r) at bottom var(--r) right var(--_r)),
+            radial-gradient(var(--r) at left var(--rg) top var(--_rg)),
+            conic-gradient(from 202.5deg at var(--_g) calc(100% - var(--_g)), #000 45deg, #0000 0);
+    background: linear-gradient(45deg, #FA6900, #C02942);
+}
+.bg-clip-triangle-l {
+    --r: 8px; /* Adjusted border radius */
+    --rg: 4px; /* Secondary border radius */
+    width: 30px;
+    height: 36px;
+    border-bottom-right-radius: var(--r);
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+    --_g: calc(50% * (1 + 1 / tan(22.5deg)) - var(--r) / (3 * sqrt(4) - 4));
+    --_r: calc(var(--r)/tan(22.5deg)),#000 150%,#0000 200%;
+    --_rg: calc(var(--rg)/tan(22.5deg)),#000 300%,#0000 0%;
+    mask:
+            radial-gradient(var(--r) at bottom var(--r) right var(--_r)),
+            radial-gradient(var(--r) at left var(--rg) top var(--_rg)),
+            conic-gradient(from 202.5deg at var(--_g) calc(100% - var(--_g)), #000 45deg, #0000 0);
+    background: linear-gradient(45deg, #FA6900, #C02942);
+}
+
+.triangle-right {
+    width: 0;
+    height: 0;
+    border-left: 50px solid #fa6900;
+    border-bottom: 50px solid transparent;
+}
+.triangle-bottom {
+    width: 0;
+    height: 0;
+    border-left: 50px solid #FA6900;
+    border-top: 50px solid transparent;
 }
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

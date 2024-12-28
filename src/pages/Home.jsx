@@ -29,7 +29,7 @@ function Home() {
     </div>;
     if (error) return <div>Error: {error}</div>;
     if (productsData.length === 0) return <div>No products available.</div>;
-    return <div className='font-murecho container'>{productsData &&<ProductsCard allProducts={productsData}/> }</div>;
+    return <div className='font-murecho '>{productsData &&<ProductsCard allProducts={productsData}/> }</div>;
 }
 
 export default Home;
