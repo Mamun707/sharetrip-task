@@ -1,22 +1,45 @@
 import React, { useState } from 'react';
 import priceAfterDiscount from '@/utils/priceAfterDiscount.js';
-import DiscountBadge from "@/components/DiscountBadge.jsx";
+import DiscountBadge from '@/components/DiscountBadge.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, decrementQuantity, removeFromCart } from '@/reduxStore/slices/cartSlice.js';
 function ProductsCard({ allProducts }) {
-    const [count, setCount] = useState(0);
-    const [showCartOptions, setShowCartOptions] = useState(false);
+    // const [count, setCount] = useState(0);
+    // const [showCartOptions, setShowCartOptions] = useState(false);
     const [addWishList, setAddWishList] = useState(false);
-    const addToCart = () => {
-        setShowCartOptions(true);
-        setCount((prevCount) => prevCount + 1);
-    };
-    const deleteCart = () => {
-        setShowCartOptions(false);
-        setCount(0);
-    };
+    // const addToCart = () => {
+    //     setShowCartOptions(true);
+    //     setCount((prevCount) => prevCount + 1);
+    // };
+    // const deleteCart = () => {
+    //     setShowCartOptions(false);
+    //     setCount(0);
+    // };
     const wishList = () => setAddWishList(!addWishList);
     const products = allProducts;
+
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart.items);
+
+    const isInCart = (id) => cartItems.some((item) => item.id === id);
+
+    const handleAddToCart = (item) => {
+        const product = {
+            ...item,
+            priceAfterDiscount: priceAfterDiscount(item.price, item.discountPercentage),
+        };
+        dispatch(addToCart(product));
+    };
+
+    const handleRemoveFromCart = (product) => {
+        dispatch(removeFromCart(product));
+    };
+
+    const handleDecreaseQuantity = (product) => {
+        dispatch(decrementQuantity(product));
+    };
     return (
-        <div className="products-card container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className='products-card container mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
                 {products?.map((item) => (
                     <div
@@ -44,24 +67,43 @@ function ProductsCard({ allProducts }) {
                                 </button>
                             </div>
                             <div className='absolute mx-3 inset-0 flex flex-col items-center justify-end pb-4 opacity-0 group-hover:opacity-100'>
-                                {showCartOptions ? (
+                                {isInCart(item.id) ? (
                                     <div className='w-full flex items-center justify-between py-1.5 mb-2 bg-[#03A629] text-white border-[1.5px] border-[#FFFFFF4D] rounded-md gap-x-2 px-2'>
-                                        <button className='flex items-center justify-center text-white w-6 h-6' onClick={deleteCart}>
-                                            <img src='/images/products/Trash.png' alt='cart' className='w-6 h-6' />
+                                        <button
+                                            className='flex items-center justify-center text-white w-6 h-6'
+                                            onClick={() => handleRemoveFromCart(item.id)}
+                                        >
+                                            <img
+                                                src='/images/products/Trash.png'
+                                                alt='cart'
+                                                className='w-6 h-6'
+                                            />
                                         </button>
                                         <span className='text-center flex-grow text-white'>
-                                            {count} Added in Cart
+                                            {cartItems.find((i) => i.id === item.id)?.quantity}{' '}
+                                            added in Cart
                                         </span>
-                                        <button className='flex items-center justify-center text-white w-6 h-6' onClick={addToCart}>
-                                            <img src='/images/products/Plus.png' alt='cart' className='w-6 h-6' />
+                                        <button
+                                            className='flex items-center justify-center text-white w-6 h-6'
+                                            onClick={() => handleAddToCart(item)}
+                                        >
+                                            <img
+                                                src='/images/products/Plus.png'
+                                                alt='cart'
+                                                className='w-6 h-6'
+                                            />
                                         </button>
                                     </div>
                                 ) : (
                                     <button
                                         className='w-full justify-center btn-primary py-1.5 mb-2 bg-[#FFFFFF4D] text-white border-[1.5px] border-[#FFFFFF4D] rounded-md flex items-center gap-x-2'
-                                        onClick={addToCart}
+                                        onClick={() => handleAddToCart(item)}
                                     >
-                                        <img src='/images/products/cart.png' alt='cart' className='w-4 h-4' />
+                                        <img
+                                            src='/images/products/cart.png'
+                                            alt='cart'
+                                            className='w-4 h-4'
+                                        />
                                         Add to Cart
                                     </button>
                                 )}
@@ -70,7 +112,11 @@ function ProductsCard({ allProducts }) {
                                     className='w-full justify-center btn-secondary py-1.5 bg-[#FFFFFF4D] text-white border-[1.5px] border-[#FFFFFF4D] rounded-md flex items-center gap-x-2'
                                     onClick={() => console.log('Button 2')}
                                 >
-                                    <img src='/images/products/eye.png' alt='eye' className='w-4 h-4' />
+                                    <img
+                                        src='/images/products/eye.png'
+                                        alt='eye'
+                                        className='w-4 h-4'
+                                    />
                                     Quick View
                                 </button>
                             </div>
