@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '@/reduxStore/slices/cartSlice.js';
 import DiscountCard from '@/components/products/DiscountCard.jsx';
 import discountedPrice from '@/utils/dicountedPrice.js';
+import {useNavigate} from "react-router-dom";
 function ProductsCard({ allProducts }) {
     const [addWishList, setAddWishList] = useState(false);
     const wishList = (item) => {
@@ -19,7 +20,8 @@ function ProductsCard({ allProducts }) {
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
             setAddWishList(true);
         }
-    };   const products = allProducts;
+    };
+    const products = allProducts;
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
     const isInCart = (id) => cartItems.some((item) => item.id === id);
@@ -34,6 +36,11 @@ function ProductsCard({ allProducts }) {
 
     const handleRemoveFromCart = (product) => {
         dispatch(removeFromCart(product));
+    };
+    const navigate = useNavigate();
+
+    const handleQuickView = (id) => {
+        navigate(`/product/${id}`);
     };
 
     return (
@@ -123,7 +130,7 @@ function ProductsCard({ allProducts }) {
 
                                 <button
                                     className='w-full justify-center btn-secondary py-1.5 bg-[#FFFFFF4D] text-white border-[1.5px] border-[#FFFFFF4D] rounded-md flex items-center gap-x-2'
-                                    onClick={() => console.log('Button 2')}
+                                    onClick={() => handleQuickView(item.id)}
                                 >
                                     <img
                                         src='/images/products/eye.png'
