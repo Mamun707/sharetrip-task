@@ -1,5 +1,6 @@
 import CartPage from '@/components/products/CartPage.jsx';
 
-export default function Cart() {
+function Cart() {
     return <CartPage />;
 }
+export default Cart;

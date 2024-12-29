@@ -19,8 +19,7 @@ function ProductsCard({ allProducts }) {
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
             setAddWishList(true);
         }
-    };
-    const products = allProducts;
+    };   const products = allProducts;
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
     const isInCart = (id) => cartItems.some((item) => item.id === id);

@@ -18,6 +18,12 @@ const Navbar = () => {
                         <Link to='/cart'>
                             <CartIcon />
                         </Link>
+                        <Link to='/wishlist'>
+                            <img
+                                src='/images/products/addedWishListIcon.svg'
+                                alt='img'
+                            />
+                        </Link>
                     </div>
                     <button
                         onClick={toggleMenu}
@@ -32,6 +38,12 @@ const Navbar = () => {
                     <div className='flex flex-col items-center space-y-4'>
                         <Link to='/cart'>
                             <CartIcon />
+                        </Link>
+                        <Link to='/wishlist'>
+                            <img
+                                src='/images/products/addedWishListIcon.svg'
+                                alt='img'
+                            />
                         </Link>
                     </div>
                 </div>
