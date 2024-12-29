@@ -11,7 +11,7 @@ const Navbar = () => {
             <nav className='bg-white shadow-md container mx-auto px-4 sm:px-6 lg:px-8'>
                 <div className=' flex justify-between items-center px-4 py-2'>
                     <Link to='/' className='text-xl font-semibold text-gray-800'>
-                        Store
+                       ShareTrip
                     </Link>
 
                     <div className='hidden md:flex space-x-8'>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import priceAfterDiscount from '@/utils/priceAfterDiscount.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '@/reduxStore/slices/cartSlice.js';
